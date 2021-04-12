@@ -1,6 +1,6 @@
 const axios = require("axios");
 const all = (data)=>{
-    console.log(data)
+    
     return{
         type:"all",
         payload:data
@@ -83,7 +83,7 @@ export const getOne = (user) =>{
 }
 
 
-const create = (user) =>{
+export const create = (user) =>{
     return (dispatch)=>{
         fetch("http://127.0.0.1:8000/api/store", {
             method: 'POST', 

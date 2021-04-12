@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import {useSelector,useDispatch} from "react-redux"
+import {Link} from "react-router-dom";
 
 const Con= styled.div`
   height:10vh;
@@ -17,6 +18,8 @@ const Con= styled.div`
       display:flex;
       align-items:center;
       justify-content:center;
+      align-items:center;
+      height:100%;
   }
 
 `
@@ -29,9 +32,8 @@ function Header(props) {
         <span>
          {greeting}
         </span>
-        <span >
-          Login/SignUp
-        </span>
+        <Link  to="/sign-in"><span >Login</span></Link>
+        <Link to="/sign-up"><span >Sign-Up</span></Link>
       </Con>
     )
 }
