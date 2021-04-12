@@ -1,5 +1,5 @@
 const axios = require("axios");
-const all = (data)=>{
+export const all = (data)=>{
     
     return{
         type:"all",
@@ -37,9 +37,15 @@ const destroy = data =>{
 }
 
 
-const logout = ()=>{
+export const logout = ()=>{
     return{
         type:"logout"
+    }
+}
+export const login = (user)=>{
+    return{
+        type:"login",
+        payload:user
     }
 }
 
@@ -60,27 +66,29 @@ export const getAll = () =>
 }
 
 
-export const getOne = (user) =>{
-    return (dispatch)=>{
-        fetch("http://127.0.0.1:8000/api/show", {
-            method: 'POST', 
-            mode: 'cors', 
-            cache: 'no-cache', 
-            credentials: 'same-origin', 
-            headers: {
-              'Content-Type': 'application/json'
+// export const getOne = (user) =>{
+//     return async (dispatch,getState)=>{
+//         fetch ("http://127.0.0.1:8000/api/show", {
+//             method: 'POST', 
+//             mode: 'cors', 
+//             cache: 'no-cache', 
+//             credentials: 'same-origin', 
+//             headers: {
+//               'Content-Type': 'application/json'
              
-            },
-            redirect: 'follow', 
-            referrerPolicy: 'no-referrer', 
-            body: JSON.stringify(user) 
-          }).then(res=>{
-              dispatch(show(res))
-          }).catch(err=>{
-              console.log(err)
-          })
-    }
-}
+//             },
+//             redirect: 'follow', 
+//             referrerPolicy: 'no-referrer', 
+//             body: user
+//           }).then(res=>
+//             dispatch(res.filter(item=>item.name===user.name)[0])
+//             )
+//           .catch(err=>{
+//               console.log(err)
+//           })
+         
+//     }
+// }
 
 
 export const create = (user) =>{
@@ -148,3 +156,6 @@ const remove = (user) =>{
           })
     }
 }
+
+
+

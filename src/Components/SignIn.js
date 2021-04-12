@@ -1,10 +1,17 @@
 import React from 'react'
 import styled from "styled-components";
-import {useDispatch} from "react-redux";
-import {getOne} from "../Redux/actions";
+import {useDispatch,useSelector} from "react-redux";
+import {getOne,login} from "../Redux/actions";
+import {useHistory} from "react-router-dom";
+import {useState} from "react"
+import { currentReducer, dataReducer } from '../Redux/reducers';
 
 
 const Con = styled.div`
+    h3{
+        font-size:1.5rem;
+        color:red;
+    }
     display:flex;
     flex-direction:column;
     form{
@@ -32,23 +39,45 @@ const Con = styled.div`
 `
 
 function SignIn() {
-const dispatch = useDispatch();
+let [error,changeError]= useState(false)
 
+const history = useHistory();
+const dispatch = useDispatch()
+let current = useSelector(state=>state.dataReducer);
+async function send(e){
+    e.preventDefault();
+    
+    let detail={
+        name:document.getElementById("name").value,
+        password:document.getElementById("password").value
+    }
+if(document.getElementById("name").value && document.getElementById("password").value){
+   
+//   await dispatch(getOne(detail))
+  
+  
+  current=current.filter(user=>user.name===detail.name)
+  
+  await dispatch(login(current[0]))
+  history.push("/user")
+}
+else{
+    
+  changeError(true)
+}
+}
 
 
     return (
         <Con>
             <h2>Please Sign-in</h2>
+            {error?<h3>Please fill in the details</h3>:null}
             <form>
-                <label for="name">Enter Your name</label>
+                <label htmlFor="name">Enter Your name</label>
                 <input id="name"></input>
-                <label for="password">Enter Your Password</label>
+                <label htmlFor="password">Enter Your Password</label>
                 <input id="password" type="password"></input>
-                <button onClick={(e)=>dispatch(getOne({
-                    name:document.getElementById("name").value,
-                    password:document.getElementById("password").value,
-                }))}>Submit</button>
-                
+                <button onClick={(e)=>send(e)}>Submit</button>  
             </form>
         </Con>
     )

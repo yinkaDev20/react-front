@@ -10,13 +10,14 @@ export const dataReducer = (state=[],action)=>{
 
 
 export const currentReducer =(state={},action)=>{
+    console.log(action)
     switch(action.type){
-        case"show":
-            return{...state}
+        case"login":
+            return{...action.payload}
         case "logout":
-            return {...state}
+            return {}
         default:
-            return {list:"empty"}
+            return {}
     }
 
 }

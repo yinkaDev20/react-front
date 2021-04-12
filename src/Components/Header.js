@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from "styled-components";
 import {useSelector,useDispatch} from "react-redux"
-import {Link} from "react-router-dom";
+import {Link ,useHistory} from "react-router-dom";
+import { logout ,all, getAll} from '../Redux/actions';
 
 const Con= styled.div`
   height:10vh;
@@ -24,18 +25,44 @@ const Con= styled.div`
 
 `
 
-function Header(props) {
-    let greeting= props.user?`Welcome ${props.user}`:`Welcome`;
+ function Header(props) {
+    const history = useHistory();
+    const dispatch=useDispatch();
+    let auth=   useSelector(state =>state.currentReducer);
+    
+    console.log(auth)
 
-    return (
+    async function remove(e){
+    
+       await dispatch(logout())
+       await dispatch(getAll())
+      history.push("/")
+    }
+  
+        
+        let greeting=`Welcome ${auth.name}`
+       
+if(!auth.name)
+
+    {return (
       <Con>
         <span>
-         {greeting}
+         Welcome
         </span>
         <Link  to="/sign-in"><span >Login</span></Link>
         <Link to="/sign-up"><span >Sign-Up</span></Link>
       </Con>
     )
+}else{
+    return(
+    <Con>
+         <span>
+          {greeting}
+        </span>
+        <span onClick={(e)=>remove(e)}>Logout</span>
+    </Con>
+    )
+}
 }
 
 export default Header
