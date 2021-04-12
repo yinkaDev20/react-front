@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import './App.css';
+ import {useSelector,useDispatch} from "react-redux"
+ import {useEffect}from "react"
+import {getAll} from "./Redux/actions"
+import {BrowserRouter,Route} from "react-router-dom"
+import Header from "./Components/Header"
+
+
+
+
+function App(props) {
+
+  const dispatch = useDispatch();
+//  dispatch(getAll())
+let data;
+ 
+useEffect(()=>{
+   dispatch(getAll())
+
+},[data])
+
+ data = useSelector(state=>state.dataReducer);
+ user = useSelector(state =>state.currentReducer);
   return (
+    <BrowserRouter>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Main data={data}/>
+  
     </div>
+    </BrowserRouter>
   );
 }
 
