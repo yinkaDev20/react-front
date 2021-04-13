@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from "styled-components";
 import {useDispatch} from "react-redux";
-import {create} from "../Redux/actions";
+import {create,getAll} from "../Redux/actions";
 import {useHistory} from "react-router-dom";
 import {useState} from "react"
+const bcrypt = require("bcryptjs")
+
 
 
 const Con = styled.div`
@@ -43,18 +45,33 @@ let [error,changeError]= useState(false)
 const history = useHistory();
 const dispatch = useDispatch()
 
-function send(e){
+async function send(e){
+    
     e.preventDefault();
     
     let detail={
         name:document.getElementById("name").value,
-        password:document.getElementById("password").value,
+        password:null,
         information:document.getElementById("information").value,
     }
+    async function hash(password){
+        const salt = await bcrypt.genSalt(10)
+        detail.password= await bcrypt.hash(password,salt)
+       
+    }
+  
 if(document.getElementById("name").value && document.getElementById("password").value && document.getElementById("information").value){
+     await hash(document.getElementById("password").value)
    
-    dispatch(create(detail))
-  history.push("/")
+    await dispatch(create(detail))
+    await dispatch(getAll())
+   
+    
+   setTimeout(()=>{
+   
+    history.push("/")
+    window.location.reload()
+   },100) 
 }
 else{
     

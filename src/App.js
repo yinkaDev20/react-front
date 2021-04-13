@@ -3,7 +3,7 @@ import './App.css';
  import {useSelector,useDispatch} from "react-redux";
  import {useEffect}from "react";
 import {getAll} from "./Redux/actions";
-import {BrowserRouter,Redirect,Route,Link,Switch} from "react-router-dom";
+import {BrowserRouter,Route,Link,Switch} from "react-router-dom";
 import Header from "./Components/Header";
 import Main from "./Components/Main";
 import SignIn from "./Components/SignIn";
@@ -24,7 +24,7 @@ const Con = styled.div`
 
 
 
-function App(props) {
+function App() {
 
   const dispatch = useDispatch();
 //  dispatch(getAll())
@@ -32,7 +32,7 @@ let data;
 
  
 useEffect(()=>{
-  console.log("running")
+  
    dispatch(getAll())
 
 },[])
@@ -42,11 +42,10 @@ useEffect(()=>{
 
  data = useSelector(state=>state.dataReducer);
  
- console.log(data)
- 
+
 
 // setting up all users display for homepage
-let allUsers = data.map(user=><Link to="/SignIn"><Main key={user.name}user={user}/></Link>);
+let allUsers = data.map((user,index)=><Link key={index}to="/sign-in"><Main key={user.name} user={user}/></Link>);
 
   return (
     <BrowserRouter>

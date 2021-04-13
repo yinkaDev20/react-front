@@ -26,7 +26,7 @@ transition:.200ms;
 `
 
 function Main(props) {
-    console.log(props.user.name)
+
 
     return (
         <Con>

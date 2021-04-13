@@ -1,3 +1,5 @@
+
+
 const axios = require("axios");
 export const all = (data)=>{
     
@@ -66,32 +68,43 @@ export const getAll = () =>
 }
 
 
-// export const getOne = (user) =>{
-//     return async (dispatch,getState)=>{
-//         fetch ("http://127.0.0.1:8000/api/show", {
-//             method: 'POST', 
-//             mode: 'cors', 
-//             cache: 'no-cache', 
-//             credentials: 'same-origin', 
-//             headers: {
-//               'Content-Type': 'application/json'
+export const getOne = (user) =>{
+ 
+    return (dispatch,getState)=>{
+        fetch("http://127.0.0.1:8000/api/show", {
+            method: 'POST', 
+            mode: 'cors', 
+            cache: 'no-cache', 
+            credentials: 'same-origin', 
+            headers: {
+              'Content-Type': 'application/json'
              
-//             },
-//             redirect: 'follow', 
-//             referrerPolicy: 'no-referrer', 
-//             body: user
-//           }).then(res=>
-//             dispatch(res.filter(item=>item.name===user.name)[0])
-//             )
-//           .catch(err=>{
-//               console.log(err)
-//           })
+            },
+            redirect: 'follow', 
+            referrerPolicy: 'no-referrer', 
+            body: JSON.stringify(user)
+          }).then(res=>res.json())
+          .then(res=>{
+              console.log(res)
+          if(res.name){
+              setTimeout(()=>{
+                return dispatch(login(res))
+              },100)
+          }
+          else{
+              return "Incorrect Password"
+          }
+          })
+          .catch(err=>{
+              console.log(err)
+          })
          
-//     }
-// }
+    }
+}
 
 
 export const create = (user) =>{
+  
     return (dispatch)=>{
         fetch("http://127.0.0.1:8000/api/store", {
             method: 'POST', 
@@ -114,6 +127,7 @@ export const create = (user) =>{
 
 
 const put = (user) =>{
+
     return (dispatch)=>{
         fetch("http://127.0.0.1:8000/api/update", {
             method: 'PUT', 

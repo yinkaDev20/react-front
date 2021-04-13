@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from "styled-components";
 import {useDispatch,useSelector} from "react-redux";
-import {getOne,login} from "../Redux/actions";
+import {getOne} from "../Redux/actions";
 import {useHistory} from "react-router-dom";
 import {useState} from "react"
-import { currentReducer, dataReducer } from '../Redux/reducers';
+
 
 
 const Con = styled.div`
@@ -47,19 +47,23 @@ let current = useSelector(state=>state.dataReducer);
 async function send(e){
     e.preventDefault();
     
+    
+
+
     let detail={
         name:document.getElementById("name").value,
         password:document.getElementById("password").value
     }
 if(document.getElementById("name").value && document.getElementById("password").value){
    
-//   await dispatch(getOne(detail))
+
   
   
   current=current.filter(user=>user.name===detail.name)
   
-  await dispatch(login(current[0]))
-  history.push("/user")
+ await dispatch(getOne(detail))
+  
+ history.push("/user")
 }
 else{
     
@@ -70,7 +74,7 @@ else{
 
     return (
         <Con>
-            <h2>Please Sign-in</h2>
+            <h2>Please Sign-in to view your secure information</h2>
             {error?<h3>Please fill in the details</h3>:null}
             <form>
                 <label htmlFor="name">Enter Your name</label>

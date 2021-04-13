@@ -10,7 +10,7 @@ export const dataReducer = (state=[],action)=>{
 
 
 export const currentReducer =(state={},action)=>{
-    console.log(action)
+    
     switch(action.type){
         case"login":
             return{...action.payload}

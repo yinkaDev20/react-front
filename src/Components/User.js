@@ -1,7 +1,7 @@
 import React from 'react'
-import {useSelector,useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import styled from "styled-components"
-import {useState} from "react"
+
 
 const Con = styled.div`
   padding-top:5rem;
@@ -13,13 +13,13 @@ const Con = styled.div`
 
 const  User= () =>{
     let current = useSelector(state =>state.currentReducer);
-    console.log(current)
-    let [info,infoChange]= useState(current.information)
-    console.log(info)
+    
+    
+    
     
  return (
         <Con>
-           <h2>{info?`Your secret is: ${info}`:`No secret to display`} </h2>
+           <h2>{current.information?`Your secret is: ${current.information}`:null} </h2>
            
         </Con>
     )
